@@ -1,0 +1,6 @@
+create table T_BASE_PAYMENT (
+    ID varchar(32) PRIMARY KEY NOT NULL ,
+    SERIAL varchar(32) NOT NULL ,
+    CREATE_USER VARCHAR(64) NOT NULL
+)
+COMMENT '订单表';
