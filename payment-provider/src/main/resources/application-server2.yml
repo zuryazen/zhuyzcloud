@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 8002
 
 spring:
   application:
@@ -50,3 +50,7 @@ eureka:
     fetchRegistry: true
     service-url:
       defaultZone: http://localhost:7001/eureka,http://localhost:7002/eureka
+
+  instance:
+    instance-id: payment8002
+    prefer-ip-address: true
