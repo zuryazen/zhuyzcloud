@@ -17,3 +17,7 @@ eureka:
 spring:
   application:
     name: order-consumer
+
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000

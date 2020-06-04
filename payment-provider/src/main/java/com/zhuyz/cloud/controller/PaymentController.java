@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.zhuyz.cloud.common.constant.Constant.StatusCode.QUERY_ERROR;
 import static com.zhuyz.cloud.common.constant.Constant.StatusCode.SAVE_ERROR;
@@ -57,16 +58,22 @@ public class PaymentController {
     @GetMapping("/discovery")
     public ResponseEntity gets() {
         List<String> services = discoveryClient.getServices();
-
         for (String service : services) {
-
             System.out.println("service: " +service);
         }
         List<ServiceInstance> instances = discoveryClient.getInstances("PAYMENT-PROVIDER");
-
         return ResponseEntity.buildSuccess(this.discoveryClient);
     }
 
+    @GetMapping("/get/port")
+    public String getPort() {
+        return serverPort;
+    }
 
+    @GetMapping("/timeout")
+    public String paymentFeignTimeout() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+        return serverPort;
+    }
 
 }

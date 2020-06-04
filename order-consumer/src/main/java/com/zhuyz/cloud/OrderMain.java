@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.netflix.ribbon.RibbonClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author zhuyz
@@ -15,6 +16,7 @@ import org.springframework.cloud.netflix.ribbon.RibbonClients;
  */
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 @EnableEurekaClient
+@EnableFeignClients
 //@RibbonClient(name = "PAYMENT-PROVIDER", configuration = MyRules.class)
 public class OrderMain {
 
