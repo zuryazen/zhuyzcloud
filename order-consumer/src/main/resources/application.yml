@@ -18,6 +18,11 @@ spring:
   application:
     name: order-consumer
 
+# 调用服务超时设置
 ribbon:
   ReadTimeout: 5000
   ConnectTimeout: 5000
+
+logging:
+  level:
+    com.zhuyz.cloud.service.PaymentFeignService: debug
