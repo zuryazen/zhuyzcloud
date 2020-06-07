@@ -66,5 +66,18 @@ public class OrderController {
         return paymentFeignService.paymentFeignTimeout();
     }
 
+    @GetMapping("/consumer/payment/hystrix/ok/{id}")
+    public String paymentInfo_OK(@PathVariable("id") String id) {
+        return paymentFeignService.paymentInfo_OK(id);
+    }
+
+
+
+    @GetMapping("/consumer/payment/hystrix/timeout/{id}")
+    String paymentInfo_timeout(@PathVariable("id") String id) {
+        return paymentFeignService.paymentInfo_timeout(id);
+    }
+
+
 
 }

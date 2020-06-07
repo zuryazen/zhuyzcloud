@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPaymentService extends IService<Payment> {
 
+    String paymentInfo_OK(String id);
+
+    String paymentInfo_timeout(String id);
+
+
+
 }

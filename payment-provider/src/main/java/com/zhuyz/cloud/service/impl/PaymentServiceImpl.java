@@ -1,10 +1,15 @@
 package com.zhuyz.cloud.service.impl;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.netflix.ribbon.proxy.annotation.Hystrix;
 import com.zhuyz.cloud.entity.Payment;
 import com.zhuyz.cloud.mapper.PaymentMapper;
 import com.zhuyz.cloud.service.IPaymentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -17,4 +22,36 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentServiceImpl extends ServiceImpl<PaymentMapper, Payment> implements IPaymentService {
 
+    /**
+     * 正常访问，OK
+     * @param id
+     * @return
+     */
+    @Override
+    public String paymentInfo_OK(String id) {
+        return "线程池：" + Thread.currentThread().getName() + "paymentInfo_OK, id: " + id + "\t" + "O(∩_∩)O";
+    }
+
+    /**
+     * 正常访问，OK
+     * @param id
+     * @return
+     */
+    @HystrixCommand(fallbackMethod = "paymentInfo_timeoutHandler", commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")
+    })
+    @Override
+    public String paymentInfo_timeout(String id) {
+//      int age = 10/0;
+        try {
+            TimeUnit.SECONDS.sleep(5L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "线程池：" + Thread.currentThread().getName() + "paymentInfo_timeout, id: " + id + "\t" + "O(∩_∩)O";
+    }
+
+    public String paymentInfo_timeoutHandler(String id) {
+        return "线程池：" + Thread.currentThread().getName() + "paymentInfo_timeoutHandler系统繁忙，请稍候再试, id: " + id + "\t" + "/(ㄒoㄒ)/~~";
+    }
 }

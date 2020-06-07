@@ -5,6 +5,7 @@ import com.zhuyz.cloud.common.utils.ResponseEntity;
 import com.zhuyz.cloud.common.utils.UUIDUtils;
 import com.zhuyz.cloud.entity.Payment;
 import com.zhuyz.cloud.service.IPaymentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -27,6 +28,7 @@ import static com.zhuyz.cloud.common.constant.Constant.StatusCode.SAVE_ERROR;
  * @since 2020-05-30
  */
 @RestController
+@Slf4j
 @RequestMapping("/payment")
 public class PaymentController {
 
@@ -74,6 +76,20 @@ public class PaymentController {
     public String paymentFeignTimeout() throws InterruptedException {
         TimeUnit.SECONDS.sleep(3);
         return serverPort;
+    }
+
+    @GetMapping("/hystrix/ok/{id}")
+    public String paymentInfo_OK(@PathVariable("id") String id) {
+        String result = paymentService.paymentInfo_OK(id);
+        log.info("****result: {}", result);
+        return result;
+    }
+
+    @GetMapping("/hystrix/timeout/{id}")
+    public String paymentInfo_timeout(@PathVariable("id") String id) {
+        String result = paymentService.paymentInfo_timeout(id);
+        log.info("****result_timeout: {}", result);
+        return result;
     }
 
 }
