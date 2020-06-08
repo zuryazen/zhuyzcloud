@@ -1,2 +1,9 @@
+com\zhuyz\cloud\common\constant\Constant$StatusCode.class
+com\zhuyz\cloud\common\utils\ResponseEntity.class
+com\zhuyz\cloud\common\utils\RedisClient.class
+com\zhuyz\cloud\common\constant\Constant$Auth.class
 com\zhuyz\cloud\entity\Payment.class
+com\zhuyz\cloud\common\constant\Constant.class
+com\zhuyz\cloud\entity\BaseEntity.class
+com\zhuyz\cloud\common\utils\UUIDUtils.class
 com\zhuyz\cloud\entity\User.class

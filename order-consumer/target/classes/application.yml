@@ -26,3 +26,8 @@ ribbon:
 logging:
   level:
     com.zhuyz.cloud.service.PaymentFeignService: debug
+
+# feign中开启hystrix
+feign:
+  hystrix:
+    enabled: true

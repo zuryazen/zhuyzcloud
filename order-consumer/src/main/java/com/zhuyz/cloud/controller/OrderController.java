@@ -1,6 +1,9 @@
 package com.zhuyz.cloud.controller;
 
 import com.netflix.discovery.converters.Auto;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.zhuyz.cloud.common.utils.ResponseEntity;
 import com.zhuyz.cloud.entity.Payment;
 import com.zhuyz.cloud.lb.LoadBalancer;
@@ -23,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/order")
 @Slf4j
+@DefaultProperties(defaultFallback = "payment_Global_FallbackMethod")
 public class OrderController {
 
     public static final String PAYMENT_URL = "http://PAYMENT-PROVIDER";
@@ -73,11 +77,19 @@ public class OrderController {
 
 
 
+    @HystrixCommand
     @GetMapping("/consumer/payment/hystrix/timeout/{id}")
-    String paymentInfo_timeout(@PathVariable("id") String id) {
+    public String paymentInfo_timeout(@PathVariable("id") String id) {
+        int age = 10/0;
         return paymentFeignService.paymentInfo_timeout(id);
     }
 
+    public String paymentInfo_timeoutHandler(String id) {
+        return "线程池：" + Thread.currentThread().getName() + "paymentInfo_timeoutHandler系统繁忙，请稍候再试, id: " + id + "\t" + "/(ㄒoㄒ)/~~";
+    }
 
+    public String payment_Global_FallbackMethod() {
+        return "Global 全局异常处理，请稍后再试";
+    }
 
 }
